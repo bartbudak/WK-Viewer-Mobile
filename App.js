@@ -9,7 +9,9 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  TextInput,
+  View,
+  Button
 } from 'react-native';
 import styles from './Styles/styles'
 
@@ -22,18 +24,54 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      text: '',
+      jishoData: [],
+      isLoading: true
+    };
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        <TextInput
+        placeholder="Search..."
+        style={{height: 40, borderColor: 'gray', borderBottomWidth: 1, width: "90%"}}
+        onChangeText={(text) => this.setState({text})}
+      />
+      <Button
+      onPress={()=>{
+      return fetch('https://jisho.org/api/v1/search/words?keyword=' + this.state.text.toString().toLowerCase())
+      .then((response) => response.json())
+      .then((responseJson) => {
+        let jishoRes = []
+        responseJson.data.forEach(function(item){
+          jishoRes.push(item)
+        })
+        this.setState({
+          isLoading: false,
+          jishoData: jishoRes,
+        }, function() {
+          // do something with new state
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      }}
+      title='Search'
+      color='#897196'
+      ></Button>
+      
+      <View>
+      {this.state.jishoData.map((item, i)=>
+      <Text>            
+      {item.japanese[0].reading} - {item.japanese[0].word}
+      </Text>
+      )}   
+      </View>
       </View>
     );
   }
