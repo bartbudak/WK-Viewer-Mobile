@@ -1,0 +1,3 @@
+rootProject.name = 'wkViewer'
+
+include ':app'
