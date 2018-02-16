@@ -11,9 +11,11 @@ import {
   Text,
   TextInput,
   View,
-  Button
+  Button,
+  ScrollView
 } from 'react-native';
 import styles from './Styles/styles'
+import {getTranslation} from './Services/getTranslation'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -43,35 +45,28 @@ export default class App extends Component<Props> {
       />
       <Button
       onPress={()=>{
-      return fetch('https://jisho.org/api/v1/search/words?keyword=' + this.state.text.toString().toLowerCase())
-      .then((response) => response.json())
-      .then((responseJson) => {
-        let jishoRes = []
-        responseJson.data.forEach(function(item){
-          jishoRes.push(item)
-        })
-        this.setState({
-          isLoading: false,
-          jishoData: jishoRes,
-        }, function() {
-          // do something with new state
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        getTranslation(this.state.text)
+          .then((jishoRes) => {
+
+            
+
+            this.setState({
+              isLoading: false,
+              jishoData: jishoRes,
+            })
+          })   
       }}
       title='Search'
       color='#897196'
       ></Button>
       
-      <View>
+      <ScrollView contentContainerStyle={{width: '100%', alignContent: 'center', alignItems: 'center'}}>
       {this.state.jishoData.map((item, i)=>
-      <Text>            
+      <Text style={styles.resultCard}>            
       {item.japanese[0].reading} - {item.japanese[0].word}
       </Text>
       )}   
-      </View>
+      </ScrollView>
       </View>
     );
   }
