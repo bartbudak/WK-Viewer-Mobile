@@ -14,19 +14,11 @@ import {
   Button,
   ScrollView
 } from 'react-native';
-import renderIf from './node_modules/render-if/lib/renderIf'
+import CardView from './Components/CardView'
 import styles from './Styles/styles'
 import {getTranslation} from './Services/getTranslation'
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component{
   constructor(props) {
     super(props);
     this.state = { 
@@ -63,18 +55,9 @@ export default class App extends Component<Props> {
       
       <ScrollView contentContainerStyle={styles.scrollView}>
       {this.state.jishoData.map((item, i)=>
-      {{renderIf(item.is_common == 'true')(
-        <Text style={styles.resultCard}>            
-        {item.japanese[0].reading} - {item.japanese[0].word}
-        </Text>
-      )}
-
-      {renderIf(item.is_common == 'false')(
-        <Text style={styles.resultCardNC}>            
-        {item.japanese[0].reading} - {item.japanese[0].word}
-        </Text>
-      )}}
-      
+      {
+        <CardView kana={item.japanese[0].reading} kanji={item.japanese[0].kanji}/>
+      }
       )}   
       </ScrollView>
       </View>
