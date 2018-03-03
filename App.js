@@ -14,7 +14,7 @@ import {
   Button,
   ScrollView
 } from 'react-native';
-import renderIf from './renderIf'
+import renderIf from './node_modules/render-if/lib/renderIf'
 import styles from './Styles/styles'
 import {getTranslation} from './Services/getTranslation'
 
@@ -63,17 +63,17 @@ export default class App extends Component<Props> {
       
       <ScrollView contentContainerStyle={styles.scrollView}>
       {this.state.jishoData.map((item, i)=>
-      {renderIf(item.common == 'true')(
-        <Text style={styles.resultCard}>            
-        {item.japanese[0].reading} - {item.japanese[0].word}
-        </Text>
-      )},
-
-      {renderIf(item.common == 'true')(
+      {{renderIf(item.is_common == 'true')(
         <Text style={styles.resultCard}>            
         {item.japanese[0].reading} - {item.japanese[0].word}
         </Text>
       )}
+
+      {renderIf(item.is_common == 'false')(
+        <Text style={styles.resultCardNC}>            
+        {item.japanese[0].reading} - {item.japanese[0].word}
+        </Text>
+      )}}
       
       )}   
       </ScrollView>

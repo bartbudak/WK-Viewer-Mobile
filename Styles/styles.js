@@ -30,6 +30,14 @@ const styles = StyleSheet.create({
         padding: 5,
         marginBottom: 10
       },
+      resultCardNC:{
+        backgroundColor: '#FFFFFF',
+        width: '80%',
+        borderColor: "#CDCDCD",
+        borderWidth: 2,
+        padding: 5,
+        marginBottom: 10
+      },
       uncommResultCard:{
         backgroundColor: '#FFFFFF',
         width: '80%',
