@@ -37,6 +37,12 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         padding: 5,
         marginBottom: 10
+      },
+      searchBox: {
+        height: 40, borderColor: 'gray', borderBottomWidth: 1, width: "90%"
+      },
+      scrollView: {
+        width: '100%', alignContent: 'center', alignItems: 'center'
       }
 
   });
