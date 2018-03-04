@@ -36,13 +36,11 @@ export default class App extends Component{
         style={styles.searchBox}
         onChangeText={(text) => this.setState({text})}
       />
+      <View style={styles.searchButton}>
       <Button
       onPress={()=>{
         getTranslation(this.state.text)
           .then((jishoRes) => {
-
-            
-
             this.setState({
               isLoading: false,
               jishoData: jishoRes,
@@ -50,13 +48,18 @@ export default class App extends Component{
           })   
       }}
       title='Search'
-      color='#897196'
+      color='white'
       ></Button>
+      </View>
       
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      
+      <ScrollView 
+      width="100%"
+      display="flex"
+      contentContainerStyle={styles.scrollView}>
       {this.state.jishoData.map((item, i)=>
       {
-        <CardView kana={item.japanese[0].reading} kanji={item.japanese[0].kanji}/>
+        return (<CardView style={{width: '100%'}}key={i} kana={item.japanese[0].reading} kanji={item.japanese[0].word} definition={item.senses[0].english_definitions}/>)
       }
       )}   
       </ScrollView>
