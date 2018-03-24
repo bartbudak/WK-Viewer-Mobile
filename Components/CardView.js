@@ -2,9 +2,14 @@
 import React, { Component } from 'react';
 import {
   Text,
-  View
+  View,
+  Image,
+  Dimensions
 } from 'react-native';
 import styles from '../Styles/styles';
+
+const dimensions = Dimensions.get('window');
+const width = dimensions.width;
 
 
 export default class CardView extends Component{
@@ -17,6 +22,8 @@ export default class CardView extends Component{
         definition: props.definition
     };
   }
+  //TODO: Rotate image when expanding details 
+  // transform: [{ rotate: '90deg'}]
 
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -26,6 +33,7 @@ export default class CardView extends Component{
     });
 }
 
+
   render() {
 
     let expandedView = null;
@@ -33,7 +41,11 @@ export default class CardView extends Component{
       expandedView = 
       this.state.definition.map((item, i)=>
         {
-          return (<Text key={i}>{"\n"}{i+1} - {item}</Text>)
+          return (
+          <Text key={i}>{"\n"}
+            <Text style={{fontSize: 8, color: '#cdcdcd'}}>{i+1}.</Text>
+            <Text style={{fontSize: 8}} >{item}</Text>
+           </Text>)
         }
         )}   
     
@@ -41,12 +53,19 @@ export default class CardView extends Component{
     return (        
         <View 
         style={styles.resultCard}>
-          <Text style={{width: '100%'}} onPress={()=>{
+          <Text onPress={()=>{
           this.setState({isExpanded: !this.state.isExpanded})
           this.forceUpdate();
           }}> 
-          {this.state.kana} - {this.state.kanji} 
-          {expandedView}</Text>
+          
+            <View style={{width: width*.2, height: 50, flex: -1, flexDirection: 'column', justifyContent: 'center'}}>
+              <Text style={{alignSelf: 'stretch', textAlign: 'center', fontSize: 10}}>{this.state.kana}</Text> 
+              <Text style={{alignSelf: 'stretch', textAlign: 'center', fontSize: 20}}>{this.state.kanji}</Text> 
+            </View> 
+            <Image style={{height: 10, width: 10}}source={require('../keyboard-right-arrow-button.png')}/>
+
+          {expandedView}
+          </Text>
         </View>
     )
   }

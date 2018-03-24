@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
       resultCard:{
         backgroundColor: '#FFFFFF',
         width: '100%',
-        borderColor: "#7CD54B",
-        borderWidth: 2,
+        borderBottomColor: "#CDCDCD",
+        borderBottomWidth: 1,
         padding: 5,
         marginBottom: 10,
         alignSelf: 'stretch'
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
       },
       searchBox: {
-        height: 40, borderColor: '#879196', borderWidth: 2, width: "100%"
+        height: 40, borderBottomColor: '#879196', borderBottomWidth: 2, width: "100%"
       },
       searchButton: {
         height: 40, borderColor: '#0000b3', backgroundColor: '#0000b3', borderWidth: 3, width: "100%"

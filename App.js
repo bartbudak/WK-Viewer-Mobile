@@ -24,19 +24,39 @@ export default class App extends Component{
     this.state = { 
       text: '',
       jishoData: [],
-      isLoading: true
+      isLoading: true,
+      borderBottomColor: '#cdcdcd'
     };
+  }
+
+  onFocus(){
+    this.setState({borderBottomColor: '#3477db'})
+  }
+
+  onBlur(){
+    this.setState({borderBottomColor: '#cdcdcd'})
   }
 
   render() {
     return (
       <View style={styles.container}>
         <TextInput
-        placeholder="Search..."
-        style={styles.searchBox}
+        placeholder="Search English/Japanese Word or Phrase..."
+        style={[styles.searchBox, {  borderBottomColor : this.state.borderBottomColor}]}
         onChangeText={(text) => this.setState({text})}
+        onFocus={ ()=> this.onFocus()}
+        onBlur={ ()=> this.onBlur()}
+        onSubmitEditing={()=>{
+          getTranslation(this.state.text)
+            .then((jishoRes) => {
+              this.setState({
+                isLoading: false,
+                jishoData: jishoRes,
+              })
+            })   
+        }}
       />
-      <View style={styles.searchButton}>
+      {/* <View style={styles.searchButton}>
       <Button
       onPress={()=>{
         getTranslation(this.state.text)
@@ -50,7 +70,7 @@ export default class App extends Component{
       title='Search'
       color='white'
       ></Button>
-      </View>
+      </View> */}
       
       
       <ScrollView 
